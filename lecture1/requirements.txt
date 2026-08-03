@@ -1,0 +1,12 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 1: LLM Fundamentals
+# Install: pip install -r requirements.txt
+#
+# Deliberately minimal — this lecture is "raw API only, no frameworks" by
+# curriculum design. You will not install LangChain, ChromaDB, or any
+# agent framework until later lectures. The whole point is to feel what
+# it's like to call an LLM with nothing but a plain SDK, the same way you'd
+# curl a REST API before reaching for a client library.
+
+groq>=0.11.0
+python-dotenv>=1.0.0
