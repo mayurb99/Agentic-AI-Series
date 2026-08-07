@@ -1,0 +1,15 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 2: Embeddings & Vector Databases
+# Install: pip install -r requirements.txt
+#
+# New this lecture:
+#   sentence-transformers -> turns text into embeddings, runs locally (no API key)
+#   chromadb              -> the vector database that stores and searches those embeddings
+#
+# groq is still here only for the small RAG-preview bonus at the end of
+# demo 3 -- demos 1 and 2 need no API key at all and work fully offline.
+
+sentence-transformers>=3.0.0
+chromadb>=0.5.0
+groq>=0.11.0
+python-dotenv>=1.0.0

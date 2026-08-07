@@ -1,0 +1,12 @@
+# Instructor transcripts — keep local
+TRANSCRIPT_*.md
+
+# Future lectures — keep local until explicitly published
+/lecture3/
+/lecture4/
+/lecture5/
+/lecture6/
+/lecture7/
+/lecture8/
+/lecture9/
+/lecture[1-9][0-9]/
