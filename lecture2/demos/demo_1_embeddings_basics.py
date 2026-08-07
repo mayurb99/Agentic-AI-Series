@@ -7,16 +7,15 @@
 # The magic property: sentences with SIMILAR MEANING get numbers that are
 # CLOSE TOGETHER, even if they don't share many of the same words.
 #
-# DEVOPS ANALOGY -- the opposite of a hash
-# ------------------------------------------
+# DEVOPS ANALOGY -- a fingerprint of meaning (contrast with a hash)
+# -----------------------------------------------------------------
 # You already know sha256sum / Docker image digests: change ONE character of
-# the input and the hash comes out completely different. That's called the
-# "avalanche effect" -- hashes are DESIGNED to destroy similarity, so nobody
-# can guess the input from the output.
+# the input and the hash comes out completely different. Hashes are designed
+# so similar inputs do NOT look similar in the output.
 #
-# An embedding is designed to do the OPPOSITE. Two sentences that mean almost
-# the same thing should produce vectors that are close together, so a
-# computer can search by MEANING instead of by exact text match.
+# An embedding is a fingerprint too -- but built for the OPPOSITE job. Two
+# sentences that mean almost the same thing should produce vectors that are
+# close together, so a computer can search by MEANING instead of exact text.
 #
 # This demo proves both halves of that claim with real numbers.
 
@@ -103,10 +102,10 @@ def part_3_hashes_do_the_opposite() -> None:
     print(f"\nSHA-256(A): {hash_a}")
     print(f"SHA-256(B): {hash_b}")
     print(
-        "\nOne extra character and the hash is 100% different -- that's the "
-        "avalanche effect you rely on for checksums and image digests. "
-        "An embedding of these two sentences, by contrast, would land "
-        "almost on top of each other, because the MEANING barely changed."
+        "\nOne extra character and the hash is 100% different -- that's what "
+        "checksums and image digests are for. An embedding of these two "
+        "sentences, by contrast, would land almost on top of each other, "
+        "because the MEANING barely changed."
     )
 
 

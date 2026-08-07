@@ -6,13 +6,12 @@
 # We store 50 short DevOps "runbook" entries in a persistent Chroma
 # collection, then search them by MEANING instead of by exact keyword.
 #
-# DEVOPS ANALOGY -- Prometheus/Elasticsearch vs. a general-purpose DB
-# ------------------------------------------------------------------
-# You could store metrics in Postgres, but you use Prometheus because it's
-# purpose-built for one query pattern (time-range aggregation) and is far
-# faster at it. Chroma is the same trade for a different query pattern:
-# "find the K most similar vectors." That's the whole reason a vector
-# database exists instead of just using arrays in a normal table.
+# DEVOPS ANALOGY -- searching logs by meaning, not exact keywords
+# --------------------------------------------------------------
+# Keyword search (grep / Ctrl+F) needs the exact words. A vector database
+# is a special search index for one job: "find the K closest meanings."
+# You could store number lists in a normal table; Chroma exists because
+# that one search pattern is specialized -- and that's what this demo shows.
 #
 # This demo has 3 parts:
 #   1. Build the persistent collection (once).
