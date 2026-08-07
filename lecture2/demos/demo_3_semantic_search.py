@@ -13,11 +13,9 @@
 # You could store number lists in a normal table; Chroma exists because
 # that one search pattern is specialized -- and that's what this demo shows.
 #
-# This demo has 3 parts:
+# This demo has 2 parts:
 #   1. Build the persistent collection (once).
 #   2. Compare semantic search vs. naive keyword search on the same queries.
-#   3. BONUS: feed the top search result to an LLM and get a plain-English
-#      answer -- a two-line preview of what Lecture 3 (RAG) builds in full.
 
 import sys
 
@@ -76,7 +74,7 @@ def naive_keyword_search(query: str, top_k: int = 1) -> list[str]:
     return [text for score, text in scored[:top_k] if score > 0] or ["(no keyword overlap found)"]
 
 
-def compare_semantic_vs_keyword(collection: "chromadb.Collection") -> str:
+def compare_semantic_vs_keyword(collection: "chromadb.Collection") -> None:
     print_header("PART 2: Semantic search vs. naive keyword search")
 
     queries = [
@@ -85,13 +83,10 @@ def compare_semantic_vs_keyword(collection: "chromadb.Collection") -> str:
         "encrypted connections to our api began failing right after midnight",
     ]
 
-    last_semantic_result = ""
-
     for query in queries:
         semantic_results = collection.query(query_texts=[query], n_results=1)
         semantic_match = semantic_results["documents"][0][0]
         distance = semantic_results["distances"][0][0]
-        last_semantic_result = semantic_match
 
         keyword_match = naive_keyword_search(query)[0]
 
@@ -109,71 +104,20 @@ def compare_semantic_vs_keyword(collection: "chromadb.Collection") -> str:
         "usually the wrong one."
     )
 
-    return last_semantic_result
-
-
-def bonus_rag_preview(context_doc: str) -> None:
-    print_header("BONUS PREVIEW: This + an LLM call is what Lecture 3 (RAG) does")
-
-    import os
-
-    from dotenv import load_dotenv
-
-    load_dotenv()
-    if not os.getenv("GROQ_API_KEY"):
-        print(
-            "\n(Skipped -- no GROQ_API_KEY configured. Demos 1 and 2, and "
-            "everything above in this demo, work without one. This bonus "
-            "section just previews what comes next.)"
-        )
-        return
-
-    from _client import DEFAULT_MODEL, get_client
-
-    question = "Why did our certificate-related outage happen, and how do we stop it recurring?"
-    client = get_client()
-
-    print(f"\nRetrieved context (from semantic search above):\n  \"{context_doc}\"")
-    print(f"\nQuestion: \"{question}\"")
-
-    response = client.chat.completions.create(
-        model=DEFAULT_MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "Answer using ONLY the provided context. "
-                    "Be concise -- 2 sentences max."
-                ),
-            },
-            {
-                "role": "user",
-                "content": f"Context: {context_doc}\n\nQuestion: {question}",
-            },
-        ],
-    )
-    print(f"\nLLM answer:\n  {response.choices[0].message.content}")
-    print(
-        "\nThat's the whole idea of RAG in miniature: retrieve the relevant "
-        "chunk with a vector database, then hand it to an LLM as context. "
-        "Lecture 3 builds this into a full pipeline."
-    )
-
 
 def main() -> None:
     print_header("PART 1: Build (or load) the 50-document knowledge base")
     collection = build_or_load_collection()
 
-    last_result = compare_semantic_vs_keyword(collection)
-    bonus_rag_preview(last_result)
+    compare_semantic_vs_keyword(collection)
 
     print_header("RECAP")
     print(
         "\n- 50 short documents were embedded once and stored persistently in Chroma.\n"
         "- Semantic search matched queries by meaning, even with zero shared\n"
         "  keywords -- naive keyword search often failed on the same queries.\n"
-        "- Retrieved context + an LLM call = the core loop of RAG, which is\n"
-        "  exactly what Lecture 3 builds out fully."
+        "- That contrast is the whole point of this lecture: search by meaning,\n"
+        "  not by exact spelling. Lecture 3 builds on this with RAG."
     )
 
 
