@@ -31,15 +31,14 @@
 
 ---
 
-## Seeded in Lecture 3 — RAG From Scratch + Advanced Retrieval
+## Seeded in Lecture 3 — RAG From Scratch
 
 | AI concept | DevOps analogy | Why it works |
 |---|---|---|
-| **Fixed-size vs. sentence-aware chunking** | Size-based vs. time-based log rotation | Fixed-size chunking rotates every N characters no matter what's on the line where the cut falls — like rotating a log every N megabytes, mid-write, regardless of content. Sentence-aware chunking rotates only at a natural boundary — like time-based log rotation, which always waits for midnight rather than slicing a line in half. |
-| **HyDE (hypothetical document embeddings)** | Synthetic monitoring / a canary request | You don't have the real answer yet, so you generate a plausible synthetic one first, purely to probe the system before doing the real lookup — exactly like synthetic monitoring fires a fabricated but realistic request to test a system before real traffic arrives. The synthetic document, like a canary request, is never shown to a real user. |
-| **Hybrid BM25 + dense retrieval** | A signature-based WAF rule + an ML-based anomaly detector | BM25 (sparse/keyword) is a signature-based WAF rule — exact/keyword match, unbeatable when the pattern is present, blind the instant it isn't. Dense retrieval (embeddings) is an ML-based anomaly detector — fuzzy, semantic, robust to rewording. Real defenses run both, combined, because two independent signals beat either one alone — hybrid retrieval is the identical idea, applied to search instead of security. |
-| **Parent-child / small-to-big chunking** | A Grafana dashboard drilling from an aggregated metric into the full raw trace | You search on a small, precise chunk (the aggregated metric a dashboard panel shows), but what you actually need for context is the full underlying detail (the raw trace behind that panel). Parent-child chunking does the identical thing to text: search over small, precise child chunks, but return the full parent chunk they belong to as the context an LLM actually reads. |
-| **Citations with every RAG answer** | Structured logging with a request ID / audit trail | Every response must be traceable back to its source, the same way every log line should be traceable to a specific request ID or commit hash. An answer with no citation is like a log line with no request ID — impossible to verify, impossible to debug when it's wrong. (Automated evaluation of citation quality — RAGAS-style metrics — is a later phase's topic; this lecture only builds the citation mechanic itself.) |
+| **Fixed-size chunking** | Cutting a long log file every N lines / characters | You slice the file on a fixed count, even if that cuts mid-sentence. Fast and predictable; some pieces are awkward to read alone. |
+| **Sentence-aware chunking** | Cutting at paragraph / sentence boundaries | You wait for a natural break so each piece still makes sense on its own. Chunk sizes vary a little — that is fine. |
+| **Hybrid BM25 + dense retrieval** | Keyword search (`grep`) + meaning search (Lecture 2), used together | Keyword search wins on exact error codes and rare terms. Meaning search wins when wording differs but the idea matches. Hybrid gives each method's top 3 picks 3/2/1 points, adds the points, and takes the highest total. |
+| **Citations with every RAG answer** | "Show your sources" / link a log line back to its file | Every claim should point back to the chunk it came from — like knowing which log file a line came from. No citation = hard to trust or debug. |
 
 ---
 

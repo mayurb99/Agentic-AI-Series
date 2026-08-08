@@ -1,0 +1,17 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 3: RAG From Scratch
+# Install: pip install -r requirements.txt
+#
+# New this lecture:
+#   pypdf      -> extract text from a PDF
+#   rank-bm25  -> keyword-ranking half of hybrid search
+#
+# From Lecture 1: groq, python-dotenv (raw SDK -- last zero-LangChain lecture)
+# From Lecture 2: sentence-transformers, chromadb
+
+pypdf>=4.0.0
+rank-bm25>=0.2.2
+sentence-transformers>=3.0.0
+chromadb>=0.5.0
+groq>=0.11.0
+python-dotenv>=1.0.0
