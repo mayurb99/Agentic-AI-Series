@@ -1,0 +1,25 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 4: LangChain Intro + LCEL + full RAG with LangChain
+# Install: pip install -r requirements.txt
+#
+# New this lecture:
+#   langchain                 -> Runnables, LCEL `|` operator, prompts, parsers
+#   langchain-groq            -> ChatGroq (replaces raw `groq` SDK client from L1-L3)
+#   langchain-text-splitters  -> CharacterTextSplitter, RecursiveCharacterTextSplitter
+#   langchain-chroma          -> LangChain wrapper around Chroma vector store
+#   langchain-community       -> document loaders (TextLoader, PyPDFLoader, ...)
+#   langchain-huggingface     -> HuggingFaceEmbeddings (local sentence-transformers)
+#   pypdf                     -> PDF reading used by PyPDFLoader
+#
+# Carried over for local embeddings (same mental model as Lectures 2-3):
+#   sentence-transformers
+
+langchain>=1.0
+langchain-groq>=0.2.0
+langchain-text-splitters>=0.3.0
+langchain-chroma>=0.2.0
+langchain-community>=0.3.0
+langchain-huggingface>=0.1.0
+pypdf>=4.0.0
+sentence-transformers>=3.0.0
+python-dotenv>=1.0.0

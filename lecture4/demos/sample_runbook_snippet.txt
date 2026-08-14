@@ -1,0 +1,5 @@
+Platform on-call notes (tiny sample for TextLoader).
+
+If a pod shows OOMKilled, raise the memory limit and check for a memory leak.
+Severity-1 incidents need a written postmortem within five business days.
+Canary releases: if error rate spikes after deploy, roll back and open an incident channel.

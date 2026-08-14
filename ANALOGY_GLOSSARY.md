@@ -42,13 +42,16 @@
 
 ---
 
-## Seeded in Lecture 4 — LangChain Intro + LCEL
+## Seeded in Lecture 4 — LangChain Intro + Full RAG with LangChain
 
 | AI concept | DevOps analogy | Why it works |
 |---|---|---|
-| **LCEL's pipe operator / the Runnable interface** | Unix shell pipes (`cmd1 \| cmd2 \| cmd3`) | `grep "ERROR" app.log \| awk '{print $1}' \| sort \| uniq -c` composes small, single-purpose programs into a pipeline, each one's output feeding the next one's input. `prompt \| llm \| parser` is the identical idea — every piece (a prompt template, a chat model, an output parser, even your own plain function) shares one interface (`Runnable`), so `\|` can connect any of them the same way a shell pipe connects any two programs that read stdin and write stdout. |
-| **Batch vs. stream vs. async invocation** | A synchronous REST call vs. a batch ETL job vs. `tail -f` on a live log | `.invoke()` is a synchronous REST call — one request, block until the one response comes back. `.batch()` is a batch ETL job — hand over a whole list of work up front, get every result back once the batch finishes, running concurrently instead of one at a time. `.stream()` is `tail -f` on a live log file — output arrives incrementally, in real time, instead of you waiting silently for the whole thing and reading it all at once. `.ainvoke()`/`.astream()` are the async twins of the first and third, for use inside an application that can't afford to block its event loop while waiting. |
-| **Callback-based token streaming to a web client** | CI/CD webhook callbacks / Server-Sent Events | A callback handler is a webhook: instead of polling a pipeline asking "are you done yet?", the pipeline calls YOUR code back the instant something happens — a Slack alert on each build stage completing, not one message at the very end. Server-Sent Events do the identical thing over HTTP: the server pushes each new piece of data to the client as it becomes available, instead of the client waiting silently for one final response. |
+| **LCEL's pipe operator / the Runnable interface** | Unix shell pipes (`cmd1 \| cmd2 \| cmd3`) | `grep "ERROR" app.log \| awk '{print $1}' \| sort` composes small programs into a pipeline. `prompt \| llm \| parser` is the same idea — every piece shares one interface (`Runnable`), so `\|` can connect them. |
+| **Batch vs. stream invocation** | One sync REST call vs. a small batch job vs. `tail -f` | `.invoke()` = one request, wait for one response. `.batch()` = hand over several jobs, get all results together. `.stream()` = see output arrive live, like following a log. |
+| **Document (`page_content` + `metadata`)** | A log line plus its tags | The text is what you search/read (`page_content`). The tags say where it came from — file, page, service (`metadata`). Loaders and splitters both work in Documents. |
+| **Document loader** | `cat` / open the tool that matches the file type | PDF → PDF loader. `.txt` → text loader. CSV → CSV loader. Wrong tool for the format = broken text. You pick the loader that matches the source. |
+| **Text splitter / chunker** | How you cut a long log before searching it | Fixed/character cuts are blunt (every N characters). Recursive cuts prefer paragraph/line/space boundaries so pieces stay readable — the everyday default for RAG. |
+| **Retriever** | Meaning search that returns the top hits | Like asking Chroma "give me the 3 closest chunks" — a retriever takes a question and returns Documents you can paste into a prompt. |
 
 ---
 

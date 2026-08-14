@@ -1,9 +1,9 @@
-ï»¿# Instructor transcripts â€” keep local
+# Instructor transcripts — keep local
 TRANSCRIPT_*.md
 
-# Future lectures â€” keep local until explicitly published
+# Future lectures — keep local until explicitly published
 # /lecture3/  # published
-/lecture4/
+# /lecture4/  # published
 /lecture5/
 /lecture6/
 /lecture7/
