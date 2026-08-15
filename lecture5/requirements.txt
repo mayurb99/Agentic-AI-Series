@@ -1,0 +1,19 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 5: Tools & Tool Calling
+# Install: pip install -r requirements.txt
+#
+# Carried over from Lecture 4:
+#   langchain, langchain-groq, python-dotenv
+# create_agent ships inside the same `langchain` package (no extra install).
+# Built-in tools (Demo 2) need community + search packages below.
+# NO chromadb / RAG packages — this lecture has no knowledge-base tools.
+
+langchain>=1.0
+langchain-groq>=0.2.0
+langchain-community>=0.3.0
+python-dotenv>=1.0.0
+
+# Demo 2 — built-in Wikipedia / DuckDuckGo (same packages as MLOps lecture6)
+duckduckgo-search>=6.0.0
+ddgs
+wikipedia>=1.4.0
