@@ -66,4 +66,27 @@
 
 ---
 
-*(Future lectures append new rows here, grouped by the lecture that introduced them — e.g. "Seeded in Lecture 6 — ....".)*
+## Seeded in Lecture 6 — Memory & State
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Short-term memory (checkpointer + thread_id)** | This ticket's Slack/chat thread | Everything said on ticket #42 stays on ticket #42. A different ticket number is a blank conversation — even with the same agent. |
+| **SummarizationMiddleware** | Rolling a long incident log into a short status update | You keep the facts that matter and drop the chatter so the channel (context window) does not fill up. |
+| **Long-term / entity store** | A sticky note on a user/service profile | Facts survive a brand-new chat. New thread_id empties short-term memory; the sticky note is still there. |
+| **thread_id** | Ticket number / conversation ID | Same ID → load that thread's history. Different ID → start fresh. |
+
+---
+
+## Seeded in Lecture 7 — Structured Output
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Structured output / Pydantic schema** | A form with labeled boxes (vs a free-text letter) | Code needs fields (`service_name`, `replicas`), not a paragraph. A form forces named boxes the model must fill. |
+| **with_structured_output** | Forcing the model to fill the form via the API | Not "please reply as JSON" hope — the API requires the schema shape (like a mandatory tool call whose args are your fields). |
+| **Schema validation** | Request validation on an API endpoint (shape OK ≠ data correct) | Wrong type or forbidden value fails early. A valid payload can still contain wrong facts — same as any API validator. |
+| **instructor** | Same form-filling idea using a raw SDK without LangChain | Wrap the raw Groq/OpenAI client and pass `response_model=YourSchema` — portable when that service is not on LangChain. |
+| **create_agent response_format** | Agent may use tools, then must finish by filling the form | Same `create_agent` as Lecture 5 — optional tool loop first, then a typed final answer in `result["structured_response"]`. |
+
+---
+
+*(Future lectures append new rows here, grouped by the lecture that introduced them — e.g. "Seeded in Lecture 8 — ....".)*

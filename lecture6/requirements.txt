@@ -1,0 +1,12 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 6: Memory & State
+# Install: pip install -r requirements.txt
+#
+# Same core packages as Lecture 5.
+# Memory APIs (InMemorySaver, InMemoryStore, SummarizationMiddleware)
+# ship inside langchain>=1.0 and its langgraph dependency — no new package.
+# NO chromadb / RAG packages.
+
+langchain>=1.0
+langchain-groq>=0.2.0
+python-dotenv>=1.0.0
