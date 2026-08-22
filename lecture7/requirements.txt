@@ -1,0 +1,13 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 7: Structured Output
+# Install: pip install -r requirements.txt
+#
+# with_structured_output + create_agent response_format ship in langchain.
+# instructor + groq SDK = same idea without LangChain (Demo 2 / Demo 3 Part B).
+
+langchain>=1.0
+langchain-groq>=0.2.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+instructor>=1.5.0
+groq>=0.11.0
