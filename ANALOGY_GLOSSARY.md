@@ -89,4 +89,108 @@
 
 ---
 
-*(Future lectures append new rows here, grouped by the lecture that introduced them — e.g. "Seeded in Lecture 8 — ....".)*
+## Seeded in Lecture 8 — Mini Project (e2e agent + UI)
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Assembling L4–L7 into one app** | Wiring services into one runnable stack (compose), not leaving containers unlinked | Tools, memory, and schemas were separate demos — like images with no `docker-compose`. L8 is the compose file: one product classmates can actually use. |
+| **Simple chat UI over an agent (Streamlit)** | A basic ops dashboard / chat panel in front of an API | The agent is still the backend. The UI is just request/response + a conversation id — like a thin Grafana/chat front-end over a service you already trust. |
+| **Reusable UI shell** | A deployable front-door you keep when the backend changes | Later lectures swap `create_agent` for LangGraph / FastAPI deploy — same chat + `thread_id` shell, new engine behind it. |
+| **Light runbook search (tiny RAG without a vector DB)** | `grep` over a small runbook folder before you stand up a full search cluster | Same job as Lecture 4 retrieval (find relevant text, then answer) — intentionally tiny so the product stays beginner-friendly. |
+
+---
+
+## Seeded in Lecture 9 — LangGraph StateGraph Fundamentals
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Chain (linear LCEL)** | A fixed CI stage list that always runs A→B→C | No loops, no "if severity high go elsewhere" — predictable pipe. |
+| **Graph (`StateGraph`)** | A workflow DAG / runbook with branches and optional loops | Nodes are steps; edges are arrows; conditional edges are `if` routing — same mental model as a deploy pipeline with gates. |
+| **State (TypedDict / MessagesState)** | The shared ticket clipboard every step reads/writes | Each node updates fields on one shared object; later nodes see earlier writes. |
+| **Node** | One CI job / one runbook step | Takes state in, does work, returns a partial update. |
+| **Edge / conditional edge** | Always-next vs. branch on a condition | Fixed edge = always go to B. Conditional = route by severity / tool_calls / approval. |
+| **`START` / `END`** | Pipeline entry and exit | Explicit where the workflow begins and finishes. |
+| **`compile()` + `invoke` / `stream`** | Build the pipeline once, then run (or watch live) | Compile = assemble the DAG; invoke = one run; stream = watch each step update like `tail -f`. |
+| **`create_agent` under the hood** | A managed K8s Deployment vs writing the Pod YAML | L5–L8 used the managed agent; L9 opens the YAML — same graph engine, now you own the nodes. |
+
+---
+
+## Seeded in Lecture 10 — ReAct Agent Loop by Hand
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **ReAct (Reason → Act → Observe)** | Diagnose → run a command → read output → decide again | Incident loop: think, act with a tool, observe result, loop until done. |
+| **`ToolNode`** | The runner that actually executes the chosen Ansible/Terraform action | Model only *requests* a tool call; `ToolNode` runs the function and writes the observation back. |
+| **`tools_condition` / route on `tool_calls`** | "Did the playbook ask for another task, or are we done?" | If the last AI message has tool calls → tools node; else → END. |
+| **Manual ReAct graph vs `create_agent`** | Hand-written systemd unit vs a managed service | Same loop; L5 hid the wiring; L10 draws every wire so HITL/persistence make sense next. |
+
+---
+
+## Seeded in Lecture 11 — Human-in-the-Loop + Persistence
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Human-in-the-loop (HITL) / interrupt** | Change-control gate before prod apply | Graph pauses before a dangerous step; a human must approve; then resume — like a CAB / `terraform apply` confirmation. |
+| **`interrupt` / `interrupt_before`** | `kubectl` wait-for-approval / pipeline `manual` gate | Soft pause: state is saved; process can wait or restart and continue from the gate. |
+| **Resume (`Command(resume=...)`)** | Clicking "Approve" on the change ticket | Same thread continues from the saved checkpoint with the human's decision. |
+| **Checkpointer swap (InMemory → Sqlite → Postgres)** | Temp RAM → local SQLite volume → managed Postgres | Same API (`checkpointer=` + `thread_id`); only the storage backend changes — like swapping a volume driver. |
+| **Durable checkpoint across restart** | Job state on disk so a crashed worker can resume | Sqlite file survives process exit; InMemory does not — prove it by restarting. |
+
+---
+
+## Seeded in Lecture 12 — Multi-Agent Supervisor (+ soft Send)
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Supervisor agent** | An incident commander / orchestrator service | One brain decides which specialist runs next; workers do not fight over the keyboard. |
+| **Worker / specialist subgraph** | A focused microservice or runbook owner | Researcher gathers; writer drafts — each is a reusable component (subgraph), not one mega-prompt. |
+| **Routing decision** | Load balancer / queue consumer picking a worker | Supervisor returns "call researcher" or "call writer" or "finish" — like routing a ticket to the right on-call. |
+| **`Send()` (light intro)** | Fan-out the same job to N workers (map) | One clear parallel summarize over a few docs — deep map-reduce comes later; today just "dispatch copies." |
+
+---
+
+## Seeded in Lecture 13 — LangSmith Tracing
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **LangSmith trace / run** | A distributed request with a trace ID (APM) | One user turn is one request; nested LLM/tool steps are spans you open to see latency and errors — same instinct as following a request across services. |
+| **Span (LLM or tool)** | One hop in a service mesh / one APM span | A tool call is like an internal HTTP call: you inspect args (request) and return value (response). |
+| **LangSmith project** | A dashboard folder / service name for logs | Runs land in a named bucket so class traffic does not mix with prod experiments. |
+| **LANGCHAIN_TRACING_V2 + API key** | Feature flag + auth token for the telemetry sidecar | Tracing is off until you flip the flag and provide credentials — like enabling an agent that ships metrics. |
+
+---
+
+## Seeded in Lecture 14 — Datasets, Metrics & Judges
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Eval dataset** | Golden fixtures / smoke-test cases in git | Versioned `(input, context, expected)` rows you re-run after every prompt change. |
+| **Metric (0–1 score)** | Pass rate / error-budget signal | A single number you can threshold — not a vibes review. |
+| **Groundedness / faithfulness** | “Quote the runbook — don’t invent steps” | The answer must stick to provided context; inventing a postgres restart when the runbook never said so is ungrounded. |
+| **LLM-as-judge** | Peer review with a written checklist (rubric) | Another reviewer grades 0–1 against explicit rules; useful signal, not infallible gospel. |
+| **Prompt A/B** | Canary two configs, keep the better | Same dataset, two system prompts, ship the higher score. |
+
+---
+
+## Seeded in Lecture 15 — CI Eval Gate
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **CI eval gate** | Required unit-test job that blocks merge | Non-zero exit when average score < threshold — same contract as `pytest` failing the pipeline. |
+| **Score threshold policy** | SLO / error-budget thresholds | `ci_min` / warn / page bands mirror how you already escalate when SLOs burn. |
+| **Online feedback (thumbs)** | Prod annotations / incident tags that become new test cases | 👎 events get promoted into dataset rows; the gate still must pass before the next deploy. |
+
+---
+
+## Seeded in Lecture 16 — Deploy FastAPI + Docker (Render)
+
+| AI concept | DevOps analogy | Why it works |
+|---|---|---|
+| **Agent behind FastAPI** | A microservice with `/health` and a POST API | The agent is no longer a script — it is a process you probe, scale, and put behind a URL. |
+| **Streaming chat endpoint** | `tail -f` / chunked HTTP responses | Tokens (or chunks) arrive live instead of one blocking response — same “follow the stream” instinct as logs. |
+| **Secrets not in the image** | Runtime env / secret store, never bake credentials into a Docker layer | If `GROQ_API_KEY` is in an image layer, it is already leaked; inject at `docker run` or Render Environment Variables. |
+| **Render Web Service (class target)** | Managed host for a container with a public URL | Push image or connect repo → set env → get `https://….onrender.com` — Cloud Run is the same idea on GCP (stretch). |
+
+---
+
+*(Future lectures append new rows here, grouped by the lecture that introduced them — e.g. "Seeded in Lecture 17 — MCP".)*

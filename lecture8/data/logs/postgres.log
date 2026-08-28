@@ -1,0 +1,7 @@
+2026-08-28 11:10:01 LOG:  checkpoint starting: time
+2026-08-28 11:12:33 WARNING:  connection pool nearly exhausted (95/100)
+2026-08-28 11:13:02 ERROR:  canceling statement due to statement timeout
+2026-08-28 11:13:02 DETAIL:  query ran longer than 30s on relation orders
+2026-08-28 11:14:18 ERROR:  deadlock detected
+2026-08-28 11:14:18 DETAIL:  Process 4412 waits for ShareLock on transaction 99102; blocked by process 4401.
+2026-08-28 11:15:40 LOG:  could not write to log file: No space left on device

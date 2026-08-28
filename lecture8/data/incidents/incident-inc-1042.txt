@@ -1,0 +1,8 @@
+Incident note (plain text backup): INC-1042
+
+Date: 2026-08-28
+Services: redis, celery-worker
+Summary: Redis stopped. Celery workers lost the broker and exited.
+Impact: Background email/jobs delayed.
+Next step: Restart redis, confirm broker, then restart celery-worker.
+Severity: high

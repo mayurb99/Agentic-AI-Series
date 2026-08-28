@@ -1,0 +1,8 @@
+2026-08-28 09:01:12 INFO  celery.worker boot start
+2026-08-28 09:01:13 INFO  connected to redis://localhost:6379/0
+2026-08-28 09:14:02 WARNING task timeout on send_email[ab12]
+2026-08-28 09:22:41 ERROR  consumer: Cannot connect to redis://localhost:6379/0: Connection refused.
+2026-08-28 09:22:41 ERROR  Retry in 2.00 seconds.
+2026-08-28 09:22:43 ERROR  consumer: Cannot connect to redis://localhost:6379/0: Connection refused.
+2026-08-28 09:23:01 CRITICAL worker exited - broker unavailable
+2026-08-28 09:23:02 INFO  celery.worker stopped

@@ -1,0 +1,20 @@
+Runbook: Disk Full (/var)
+
+Symptoms:
+- df -h shows /var above 85%
+- Services fail to write logs
+- Postgres or nginx may start throwing I/O errors
+
+Checks:
+1. df -h
+2. du -sh /var/log/* | sort -h
+3. Look for large rotated logs and leftover temp files
+
+Fix:
+1. Rotate and compress old logs.
+2. Delete safe temp files under /var/tmp (only known junk).
+3. Estimate days until threshold using current % and growth per day.
+4. Do NOT delete database data directories.
+
+Escalate:
+If /var hits 95%, page platform on-call immediately.

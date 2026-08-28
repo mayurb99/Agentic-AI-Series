@@ -1,0 +1,5 @@
+2026/08/28 10:05:11 [error] 2211#2211: *902 upstream timed out (110: Connection timed out) while connecting to upstream
+2026/08/28 10:05:12 [error] 2211#2211: *903 connect() failed (111: Connection refused) while connecting to upstream, upstream: "http://127.0.0.1:8000/"
+2026/08/28 10:06:01 [warn] 2211#2211: *910 upstream server temporarily disabled while connecting to upstream
+2026/08/28 10:07:44 [error] 2211#2211: *955 no live upstreams while connecting to upstream, client: 10.0.1.22, server: app.example.com
+2026/08/28 10:08:02 [error] 2211#2211: *960 open() "/var/log/nginx/access.log" failed (28: No space left on device)
