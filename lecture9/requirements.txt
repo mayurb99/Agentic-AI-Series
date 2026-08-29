@@ -1,0 +1,11 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 9: LangGraph StateGraph Fundamentals
+# Install: pip install -r requirements.txt
+#
+# StateGraph ships with langgraph (pulled in by langchain).
+# ChatGroq is only needed for Demo 3 (optional LLM node).
+
+langchain>=1.0
+langchain-groq>=0.2.0
+langgraph>=1.0
+python-dotenv>=1.0.0
