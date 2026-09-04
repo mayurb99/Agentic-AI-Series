@@ -1,7 +1,7 @@
-# Instructor transcripts � keep local
+﻿# Instructor transcripts ï¿½ keep local
 TRANSCRIPT_*.md
 
-# Future lectures � keep local until explicitly published
+# Future lectures ï¿½ keep local until explicitly published
 # /lecture3/  # published
 # /lecture4/  # published
 # /lecture5/  # published
@@ -9,6 +9,8 @@ TRANSCRIPT_*.md
 # /lecture7/  # published
 # /lecture8/  # published
 # /lecture9/  # published
-/lecture[1-9][0-9]/
-# Note: lecture9 + lecture10�99 stay gitignored so folders can exist
+# /lecture10/  # published (was /lecture[1-9][0-9]/)
+/lecture1[1-9]/
+/lecture[2-9][0-9]/
+# Note: lecture11-99 stay gitignored so folders can exist
 # locally without force-publishing. Comment out a line to publish that lecture.

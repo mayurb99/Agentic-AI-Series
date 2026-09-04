@@ -1,0 +1,8 @@
+# Agentic AI for DevOps Engineers — requirements.txt
+# Lecture 10: ReAct Agent Loop — Built by Hand
+# Install: pip install -r requirements.txt
+
+langchain>=1.0
+langchain-groq>=0.2.0
+langgraph>=1.0
+python-dotenv>=1.0.0
