@@ -1,0 +1,11 @@
+# Agentic AI Series — requirements.txt
+# Lecture 11: Human-in-the-Loop + Persistence
+# Install: pip install -r requirements.txt
+#
+# SqliteSaver lives in a separate package (same checkpointer API as InMemorySaver).
+
+langchain>=1.0
+langchain-groq>=0.2.0
+langgraph>=1.0
+langgraph-checkpoint-sqlite>=2.0.0
+python-dotenv>=1.0.0
