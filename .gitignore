@@ -11,7 +11,8 @@ TRANSCRIPT_*.md
 # /lecture9/  # published
 # /lecture10/  # published (was /lecture[1-9][0-9]/)
 # /lecture11/  # published
-/lecture1[2-9]/
+# /lecture12/  # published
+/lecture1[3-9]/
 /lecture[2-9][0-9]/
-# Note: lecture12-99 stay gitignored so folders can exist
+# Note: lecture13-99 stay gitignored so folders can exist
 # locally without force-publishing. Comment out a line to publish that lecture.
